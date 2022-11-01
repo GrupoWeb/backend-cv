@@ -8,6 +8,8 @@ ARG POSTGRES_VERSION=13
 
 WORKDIR /var/www/html
 
+COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 
@@ -51,14 +53,14 @@ RUN update-alternatives --set php /usr/bin/php8.0
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.0
 
-RUN groupadd --force -g $WWWGROUP sail
-RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
+RUN groupadd --force -g 1000 sail
+RUN useradd -ms /bin/bash --no-user-group -g 1000 -u 1337 sail
 
 COPY start-container /usr/local/bin/start-container
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
-EXPOSE 8000
+EXPOSE 80
 
 ENTRYPOINT ["start-container"]
