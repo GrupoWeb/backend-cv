@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [App\Http\Controllers\AuthenticationController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\AuthenticationController::class, 'store']);
 Route::get('/user', [App\Http\Controllers\AuthenticationController::class, 'user']);
-// Route::group(['middleware' => 'auth:api'], function() {
-    Route::post('logout', [App\Http\Controllers\AuthenticationController::class, 'logout']);
-// });
-
-
+Route::post('logout', [App\Http\Controllers\AuthenticationController::class, 'logout']);
 Route::post('/menu-customers', [App\Http\Controllers\MenuController::class, 'index']);
+
+Route::group(['prefix' => 'users'], function () {
+    Route::get('all', [App\Http\Controllers\UserController::class, 'index']);
+    Route::post('profile',[App\Http\Controllers\UserController::class, 'profile']);
+});

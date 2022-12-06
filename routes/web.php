@@ -14,14 +14,10 @@ use App\Http\Controllers\MenuController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
-
-Route::get('/menujs',[MenuController::class, 'index']);
+Route::get('/{component?}', 'HomeController@index')->name('home');
+//Route::get('/{group}/{component}/{id?}', 'HomeController@show');

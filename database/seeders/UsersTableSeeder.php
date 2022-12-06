@@ -26,6 +26,16 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(60),
                 'role_id'        => $role->id,
             ]);
+
+            $role = Role::where('name', 'Administrator')->firstOrFail();
+
+            User::create([
+                'name'           => 'Administración CVISUAL',
+                'email'          => 'admin@cvisual.com',
+                'password'       => bcrypt('123456789'),
+                'remember_token' => Str::random(60),
+                'role_id'        => $role->id,
+            ]);
         }
     }
 }
