@@ -8,11 +8,11 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('salarios', function (Blueprint $table) {
-            $table->id();
-            $table->decimal('salary',8,2);
-            $table->decimal('bonus',8,2);
-            $table->decimal('agreed_bonus',8,2);
-            $table->foreignId('user_id')->constrained();
+            $table->id()->comment('ID');
+            $table->decimal('salary',8,2)->comment('Salario');
+            $table->decimal('bonus',8,2)->comment('Bonificación 78 89');
+            $table->decimal('agreed_bonus',8,2)->comment('Bono Acordado 78 89 Pactada');
+            $table->foreignId('user_id')->comment('Usuario Relacionado')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -8,8 +8,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('tipo_telefonos', function (Blueprint $table) {
-            $table->id();
-            $table->string('description');
+            $table->id()->comment('ID');
+            $table->string('description')->comment('Desctipción');
             $table->timestamps();
             $table->softDeletes();
         });

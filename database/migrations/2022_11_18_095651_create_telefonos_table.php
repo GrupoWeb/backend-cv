@@ -8,10 +8,10 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('telefonos', function (Blueprint $table) {
-            $table->id();
-            $table->integer('number');
-            $table->foreignId('tipo_telefono_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->id()->comment('ID');
+            $table->integer('number')->comment('Número');
+            $table->foreignId('tipo_telefono_id')->comment('Tipo de Teléfono')->constrained();
+            $table->foreignId('user_id')->comment('usuario Relacionado')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

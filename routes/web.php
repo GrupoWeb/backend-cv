@@ -18,6 +18,3 @@ use App\Http\Controllers\MenuController;
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
-
-Route::get('/{component?}', 'HomeController@index')->name('home');
-//Route::get('/{group}/{component}/{id?}', 'HomeController@show');

@@ -1,0 +1,732 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Implementation Api CV",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/accounts": {
+            "get": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "description": "Get all Accounts",
+                "operationId": "d21f3a95fb409c713237b29b00673d98",
+                "responses": {
+                    "200": {
+                        "description": "Listado de cuentas contables"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "description": "Store a newly created resource in database",
+                "operationId": "37f65228967cfd6c8b77becf6a3c3c20",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Nombre de la cuenta",
+                                        "type": "string"
+                                    },
+                                    "parent_id": {
+                                        "description": "Id del Padre",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Crear una cuenta"
+                    }
+                }
+            }
+        },
+        "/api/accounts/parent": {
+            "get": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "description": "Get all Accounts Parent",
+                "operationId": "c78d7517227791cef5e2cd3e97b0ebf3",
+                "responses": {
+                    "200": {
+                        "description": "Listado de cuentas contables"
+                    }
+                }
+            }
+        },
+        "/api/accounts/{account}": {
+            "get": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "description": "Get one Accounts",
+                "operationId": "aa4bad7fb90a9849a7a0c5aab07aad77",
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "path",
+                        "description": "id account",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener una cuenta"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "description": "Update one Account",
+                "operationId": "cca203f30b1942985f6f9064b1aca952",
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "title for account",
+                                        "type": "string"
+                                    },
+                                    "parent_id": {
+                                        "description": "Id del Padre",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Actualizar una cuenta"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "description": "Delete a single account on the ID supplied",
+                "operationId": "9b240041ef7183e1600f1df31c5562ed",
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "path",
+                        "description": "ID of account to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminar una cuenta"
+                    }
+                }
+            }
+        },
+        "/api/accounts/export": {
+            "get": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "description": "Download Excel File",
+                "operationId": "170dd8a3f0cf78013f1403ed5a88e3b4",
+                "responses": {
+                    "200": {
+                        "description": "Listado de cuentas contables",
+                        "content": {
+                            "application/vnd.ms-excel": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/familia": {
+            "get": {
+                "tags": [
+                    "Familia"
+                ],
+                "description": "Obtain family records data",
+                "operationId": "f750083e59bd410f6e12f81948f6d315",
+                "responses": {
+                    "200": {
+                        "description": "Listado de Datos Familiares"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Familia"
+                ],
+                "description": "Store a newly created resource in database",
+                "operationId": "a1f8fa86bdffb93b0c7432b399207846",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "full_name": {
+                                        "description": "Nombre Completo",
+                                        "type": "string"
+                                    },
+                                    "gender": {
+                                        "description": "Género",
+                                        "type": "string"
+                                    },
+                                    "date_of_birth": {
+                                        "description": "Fecha de cumpleaños",
+                                        "type": "string"
+                                    },
+                                    "user_id": {
+                                        "description": "Identificación del Usuario",
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Crear un registro familiar"
+                    }
+                }
+            }
+        },
+        "/api/familia/{id}": {
+            "get": {
+                "tags": [
+                    "Familia"
+                ],
+                "description": "Get family information by ID",
+                "operationId": "a18762f16da76d1d5f77c6962421c389",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener la información familiar por su id"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Familia"
+                ],
+                "description": "Update a record",
+                "operationId": "1e55997c009aef3e43396d66f7ec6a0f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "full_name": {
+                                        "description": "Nombre Completo",
+                                        "type": "string"
+                                    },
+                                    "gender": {
+                                        "description": "Género",
+                                        "type": "string"
+                                    },
+                                    "date_of_birth": {
+                                        "description": "Fecha de nacimiento",
+                                        "type": "string"
+                                    },
+                                    "user_id": {
+                                        "description": "identificación del usuario",
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Actualizar un registro familiar"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Familia"
+                ],
+                "description": "Delete a single type on the ID supplied",
+                "operationId": "ab8361c40af1c30e5b9a606c47fbd4e9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminar un registro familiar"
+                    }
+                }
+            }
+        },
+        "/api/salario": {
+            "get": {
+                "tags": [
+                    "Salarios"
+                ],
+                "description": "Get a list of salaries",
+                "operationId": "e1e58db3e7ebe9704c11cdf9db6e15d8",
+                "responses": {
+                    "200": {
+                        "description": "Listado de Salarios"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Salarios"
+                ],
+                "description": "Store a newly created resource in database",
+                "operationId": "043604dc983fd9659a37824d50a9be9c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "salary": {
+                                        "description": "Salario",
+                                        "type": "number"
+                                    },
+                                    "bonus": {
+                                        "description": "Bonificación 78 89",
+                                        "type": "number"
+                                    },
+                                    "agreed_bonus": {
+                                        "description": "Bonificación Acordado Pactada",
+                                        "type": "number"
+                                    },
+                                    "user_id": {
+                                        "description": "Identificación del usuario",
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Crear un recurso de Salario"
+                    },
+                    "500": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/salario/{id}": {
+            "get": {
+                "tags": [
+                    "Salarios"
+                ],
+                "description": "Get a Salary for the id",
+                "operationId": "432e35122b52e2dbfb37df396c3bc8c1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id for salary",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener un Salario"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Salarios"
+                ],
+                "description": "Update an employee's salary",
+                "operationId": "9d8066204d4863137c938169e1a73815",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "salary": {
+                                        "description": "Salario",
+                                        "type": "integer"
+                                    },
+                                    "bonus": {
+                                        "description": "Bonificación 78 89",
+                                        "type": "integer"
+                                    },
+                                    "agreed_bonus": {
+                                        "description": "Bonificación Pactada",
+                                        "type": "integer"
+                                    },
+                                    "user_id": {
+                                        "description": "Identificación del Usuario",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Actualizar un Salario de Empleado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Salarios"
+                ],
+                "description": "Delete a single salary's on the ID supplied",
+                "operationId": "12560aa0de02422c76acbc8d2d8e8364",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of salary to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminar un Salario"
+                    }
+                }
+            }
+        },
+        "/api/telefono": {
+            "get": {
+                "tags": [
+                    "Teléfonos"
+                ],
+                "description": "Get phone list",
+                "operationId": "4ffd506a53cadd4b3b56031da131abb1",
+                "responses": {
+                    "200": {
+                        "description": "Listado de Teléfonos"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Teléfonos"
+                ],
+                "description": "Store a newly created resource in database",
+                "operationId": "5d4f6d77684404f9d4b8983318245f8c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "number": {
+                                        "description": "Número de Teléfono",
+                                        "type": "integer"
+                                    },
+                                    "tipo_telefono_id": {
+                                        "description": "Identificación del tipo de teléfono",
+                                        "type": "integer"
+                                    },
+                                    "user_id": {
+                                        "description": "Identificación del Usuario",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Crear un Teléfono"
+                    }
+                }
+            }
+        },
+        "/api/telefono/{id}": {
+            "get": {
+                "tags": [
+                    "Teléfonos"
+                ],
+                "description": "Get a record of phone type",
+                "operationId": "21526c365592c39ad4160714a62da507",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id for Phone",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener un tipo de teléfono"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Teléfonos"
+                ],
+                "description": "Update a Phone",
+                "operationId": "d78238bb53fad42316e4395e7414b666",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "number": {
+                                        "description": "number",
+                                        "type": "integer"
+                                    },
+                                    "tipo_telefono_id": {
+                                        "description": "Phone type identification",
+                                        "type": "integer"
+                                    },
+                                    "user_id": {
+                                        "description": "User Identification",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Actualizar un Teléfono"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Teléfonos"
+                ],
+                "description": "Delete a single phone on the ID supplied",
+                "operationId": "29172e39dd07e14e4855ce10ac523275",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Phone to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminar un telefono"
+                    }
+                }
+            }
+        },
+        "/api/tipo-telefono": {
+            "get": {
+                "tags": [
+                    "Tipos de Teléfonos"
+                ],
+                "description": "Get all the types",
+                "operationId": "952af30ae3459c942909012bd2228640",
+                "responses": {
+                    "200": {
+                        "description": "Listado de tipo de Teléfono"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tipos de Teléfonos"
+                ],
+                "description": "Store a newly created resource in database",
+                "operationId": "b645c23c311fc3fdd38e5df1eb9f5e1f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "description": "Descripción del Tipo",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Crear un tipo"
+                    }
+                }
+            }
+        },
+        "/api/tipo-telefono/{tipo}": {
+            "get": {
+                "tags": [
+                    "Tipos de Teléfonos"
+                ],
+                "description": "Get a record of phone type",
+                "operationId": "90941f672ecf12124fbf9467a1d8eba3",
+                "parameters": [
+                    {
+                        "name": "tipo",
+                        "in": "path",
+                        "description": "id for type",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener un tipo de teléfono"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tipos de Teléfonos"
+                ],
+                "description": "Update a type",
+                "operationId": "237c085cb9204ff53384bb022c228e44",
+                "parameters": [
+                    {
+                        "name": "tipo",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "description": "description",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Actualizar un tipo"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tipos de Teléfonos"
+                ],
+                "description": "Delete a single type on the ID supplied",
+                "operationId": "f5786d5ff5219db1a059e576e8cac5c8",
+                "parameters": [
+                    {
+                        "name": "tipo",
+                        "in": "path",
+                        "description": "ID of type to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminar un tipo de telefono"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Get all Users",
+                "operationId": "c457726701591d1183b53aa71fc13441",
+                "responses": {
+                    "200": {
+                        "description": "Listado de Usuarios"
+                    }
+                }
+            }
+        }
+    }
+}

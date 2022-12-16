@@ -164,7 +164,7 @@ class MenuItemsTableSeeder extends Seeder
 
         $adminTool = MenuItem::firstOrNew([
             'menu_id' => $menuAdmin->id,
-            'title'   => 'Administración',
+            'title'   => 'menucustom.menu.title.administrator',
             'url'     => '',
         ]);
         if (!$adminTool->exists) {
@@ -176,10 +176,10 @@ class MenuItemsTableSeeder extends Seeder
                 'order'      => 1,
             ])->save();
         }
-
+//usuarios
         $menuItem = MenuItem::firstOrNew([
             'menu_id' => $menuAdmin->id,
-            'title'   => 'Usuarios',
+            'title'   => 'menucustom.children.user',
             'url'     => '/administracion/usuarios',
         ]);
         if (!$menuItem->exists) {
@@ -191,6 +191,72 @@ class MenuItemsTableSeeder extends Seeder
                 'order'      => 10,
             ])->save();
         }
+
+//cuentas
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.children.account',
+            'url'     => '/administracion/cuentas',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => '',
+                'color'      => null,
+                'parent_id'  => $adminTool->id,
+                'order'      => 11,
+            ])->save();
+        }
+
+//clientes
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.children.client',
+            'url'     => '/administracion/clientes',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => '',
+                'color'      => null,
+                'parent_id'  => $adminTool->id,
+                'order'      => 12,
+            ])->save();
+        }
+
+//proveedores
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.children.provider',
+            'url'     => '/administracion/proveedores',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => '',
+                'color'      => null,
+                'parent_id'  => $adminTool->id,
+                'order'      => 13,
+            ])->save();
+        }
+
+//productos
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.children.product',
+            'url'     => '/administracion/productos',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => '',
+                'color'      => null,
+                'parent_id'  => $adminTool->id,
+                'order'      => 14,
+            ])->save();
+        }
+
+
 
     }
 }

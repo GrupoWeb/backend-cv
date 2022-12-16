@@ -8,28 +8,28 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Telefono
+ * Class Familium
  *
  * @property $id
- * @property $number
- * @property $tipo_telefono_id
+ * @property $full_name
+ * @property $gender
+ * @property $date_of_birth
  * @property $user_id
  * @property $created_at
  * @property $updated_at
  * @property $deleted_at
  *
- * @property TipoTelefono $tipoTelefono
  * @property User $user
  * @package App
  * @mixin Builder
  */
-class Telefono extends Model
+class Familium extends Model
 {
     use SoftDeletes;
 
     static array $rules = [
-		'number' => 'required',
-		'tipo_telefono_id' => 'required',
+		'full_name' => 'required',
+		'gender' => 'required',
 		'user_id' => 'required',
     ];
 
@@ -40,16 +40,8 @@ class Telefono extends Model
      *
      * @var array
      */
-    protected $fillable = ['number','tipo_telefono_id','user_id'];
+    protected $fillable = ['full_name','gender','date_of_birth','user_id'];
 
-
-    /**
-     * @return HasOne
-     */
-    public function tipoTelefono(): HasOne
-    {
-        return $this->hasOne('App\Models\TipoTelefono', 'id', 'tipo_telefono_id');
-    }
 
     /**
      * @return HasOne
