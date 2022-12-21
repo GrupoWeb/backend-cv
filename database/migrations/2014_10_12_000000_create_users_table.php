@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('email')->unique()->comment('Correo Electrónico');
             $table->timestamp('email_verified_at')->nullable()->comment('Verificación de correo');
             $table->string('password')->comment('Contraseña');
-            $table->integer('identification')->nullable()->comment('DPI');
+            $table->bigInteger('identification')->nullable()->comment('DPI');
             $table->string('address')->nullable()->comment('Dirección');
             $table->date('date_of_birth')->nullable()->comment('Fecha de Nacimiento');
             $table->string('nit')->nullable()->comment('NIT');

@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
@@ -12,6 +10,10 @@ class User extends \TCG\Voyager\Models\User
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    static array $rules = [
+        'email' =>  'required|unique:users,email',
+        'password'  => 'required|min:8',
+    ];
 
 
     /**
@@ -21,8 +23,20 @@ class User extends \TCG\Voyager\Models\User
      */
     protected $fillable = [
         'name',
+        'first_name',
+        'second_name',
+        'surname',
+        'second_surname',
         'email',
+        'avatar',
         'password',
+        'identification',
+        'address',
+        'date_of_birth',
+        'nit',
+        'gender',
+        'marital_status',
+        'igss',
         "role_id"
     ];
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use TCG\Voyager\Facades\Voyager;
@@ -46,4 +47,15 @@ class UserController extends Controller
         ];
         return $profile;
     }
+
+
+    public function storeUser(StoreUserRequest $request){
+
+        $user = User::create($request->all());
+
+        return response()->json($user, Response::HTTP_OK);
+
+    }
+
+
 }

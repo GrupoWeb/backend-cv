@@ -21,6 +21,7 @@ Route::post('logout', [App\Http\Controllers\AuthenticationController::class, 'lo
 Route::post('menu-customers', [App\Http\Controllers\MenuController::class, 'index']);
 
 Route::post('users/profile',[App\Http\Controllers\UserController::class, 'profile']);
+Route::post('users/store',[App\Http\Controllers\UserController::class, 'storeUser']);
 Route::resource('users', 'App\Http\Controllers\UserController', ['except' => ['create','edit']]);
 Route::get('accounts/parent',[App\Http\Controllers\CuentasCorrienteController::class, 'CuentasPadres']);
 Route::get('accounts/export',[App\Http\Controllers\CuentasCorrienteController::class, 'exportExcel']);
