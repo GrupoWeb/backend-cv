@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\UserPasswordCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -57,6 +58,7 @@ class User extends \TCG\Voyager\Models\User
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => UserPasswordCast::class
     ];
 
 

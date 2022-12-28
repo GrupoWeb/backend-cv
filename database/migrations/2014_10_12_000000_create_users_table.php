@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('nit')->nullable()->comment('NIT');
             $table->string('gender',2)->nullable()->comment('Género');
             $table->string('marital_status')->nullable()->comment('Estado Civil');
-            $table->boolean('igss')->nullable()->comment('IGSS');
+            $table->bigInteger('igss')->nullable()->comment('IGSS');
             $table->rememberToken();
             $table->timestamps();
         });
