@@ -308,6 +308,28 @@
                 }
             }
         },
+        "/api/familia/childrens/{id}": {
+            "get": {
+                "tags": [
+                    "Familia"
+                ],
+                "description": "Get family information by ID",
+                "operationId": "f90c0ac203de13e1416138bd4d04de44",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener la información familiar por su id"
+                    }
+                }
+            }
+        },
         "/api/salario": {
             "get": {
                 "tags": [

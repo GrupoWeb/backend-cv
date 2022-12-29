@@ -44,11 +44,6 @@ class UserController extends Controller
         return response()->json($user, Response::HTTP_OK);
     }
 
-    public function urlAvatar(Request $request){
-
-    }
-
-
     /**
      * @param StoreUserRequest $request
      * @return JsonResponse
@@ -78,5 +73,64 @@ class UserController extends Controller
         User::find($id)->update(['avatar'   =>  $url]);
     }
 
+    /**
+     * @param $file
+     * @param $filename
+     * @param $id
+     * @return void
+     */
+    protected function UpdateAvatarUser($file, $filename, $id): void
+    {
+        $fileName = $filename;
+        Storage::disk(config('voyager.storage.disk'))->putFileAs('users/',$file,$fileName);
+        $url = Storage::url('users/' . $fileName );
+        User::find($id)->update(['avatar'   =>  $url]);
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    protected function existAndDeleteFile($name){
+        if(Storage::disk(config('voyager.storage.disk'))->exists('users/'.$name)){
+            Storage::disk(config('voyager.storage.disk'))->delete('users/' . $name);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @param $id
+     * @return string
+     */
+    protected function splitAvatarPath($id){
+        $user = User::select('avatar')->where([ 'id'    =>  $id])->get();
+        $name = explode('/storage/users/',$user[0]->avatar);
+        return $name[1];
+    }
+
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateAvatarById(Request $request){
+        if($this->existAndDeleteFile($this->splitAvatarPath($request->id))){
+            $file = $request->file('file');
+            $name = $file->hashName();
+            $this->UpdateAvatarUser($file, $name, $request->id);
+
+            return response()->json(User::select('avatar')->where([ 'id'    =>  $request->id])->get(), Response::HTTP_ACCEPTED);
+        }else{
+            return response()->json('not file contend',Response::HTTP_OK);
+        }
+    }
+
+
+    public function updateUserById(Request $request){
+        $user = User::where([ 'id'    =>  $request->id])->update($request->all());
+        return response()->json($user, Response::HTTP_ACCEPTED);
+    }
 
 }

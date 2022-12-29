@@ -123,6 +123,35 @@ class FamiliumController extends Controller
         return response()->json($familium, Response::HTTP_OK);
     }
 
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+
+    /**
+     * @OA\Get (
+     *     path="/api/familia/childrens/{id}",
+     *     description="Get family information by ID",
+     *     tags={"Familia"},
+     *     @OA\Parameter (
+     *      name="id",
+     *      in="path",
+     *      description="id",
+     *      required=true,
+     *      ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Obtener la información familiar por su id",
+     *      )
+     * )
+     */
+    public function showByUserId(int $id){
+        $familium = Familium::selectRaw('id,full_name, CASE WHEN gender = "M" THEN "MASCULINO" WHEN gender = "F" THEN "FEMENINO" ELSE "OTROS" END as gender, date_of_birth')->where(['user_id' => $id])->get();
+
+        return response()->json($familium, Response::HTTP_OK);
+    }
+
     /**
      * Update the specified resource in storage.
      *
