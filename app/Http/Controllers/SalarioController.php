@@ -130,6 +130,35 @@ class SalarioController extends Controller
         return response()->json($salario, Response::HTTP_OK);
     }
 
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+
+    /**
+     * @OA\Get (
+     *     path="/api/salario/usuario/{id}",
+     *     description="Get salary information by ID",
+     *     tags={"Salarios"},
+     *     @OA\Parameter (
+     *      name="id",
+     *      in="path",
+     *      description="id",
+     *      required=true,
+     *      ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Obtener la información salarios por su id",
+     *      )
+     * )
+     */
+    public function showByUserId(int $id){
+        $salario = Salario::select('id','salary','bonus','agreed_bonus','user_id')->where(['user_id' => $id])->get();
+
+        return response()->json($salario, Response::HTTP_OK);
+    }
+
     /**
      * Update the specified resource in storage.
      *

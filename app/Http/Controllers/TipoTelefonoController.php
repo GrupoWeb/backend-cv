@@ -31,7 +31,8 @@ class TipoTelefonoController extends Controller
      */
     public function index()
     {
-        return response()->json(TipoTelefono::all(), Response::HTTP_OK);
+        $tipos = TipoTelefono::selectRaw('id as value, description as label')->get();
+        return response()->json($tipos, Response::HTTP_OK);
     }
 
     /**

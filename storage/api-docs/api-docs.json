@@ -480,6 +480,28 @@
                 }
             }
         },
+        "/api/salario/usuario/{id}": {
+            "get": {
+                "tags": [
+                    "Salarios"
+                ],
+                "description": "Get salary information by ID",
+                "operationId": "9f40483353af8802b10b070815abc40d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener la información salarios por su id"
+                    }
+                }
+            }
+        },
         "/api/telefono": {
             "get": {
                 "tags": [
