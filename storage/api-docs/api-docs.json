@@ -5,6 +5,172 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/contacto": {
+            "get": {
+                "tags": [
+                    "Contacto"
+                ],
+                "description": "Get List",
+                "operationId": "fd04786c4a93b38c6a4850982592a738",
+                "responses": {
+                    "200": {
+                        "description": "Listado de Contactos de Emergencia"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Contacto"
+                ],
+                "description": "Store a newly created resource in database",
+                "operationId": "4368fe6406d42350d750b5bfebbc65a6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "contact_name": {
+                                        "description": "Nombre del Contacto",
+                                        "type": "string"
+                                    },
+                                    "number": {
+                                        "description": "Número de Teléfono",
+                                        "type": "integer"
+                                    },
+                                    "relationship": {
+                                        "description": "Parentesco",
+                                        "type": "string"
+                                    },
+                                    "user_id": {
+                                        "description": "Identificación del Usuario",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Crear un contacto"
+                    }
+                }
+            }
+        },
+        "/api/contacto/{id}": {
+            "get": {
+                "tags": [
+                    "Contacto"
+                ],
+                "description": "Get a record of contact",
+                "operationId": "d18a398e5946711f0da02b7fcd44e70f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id for contact",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener un contacto"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Contacto"
+                ],
+                "description": "Update a contact",
+                "operationId": "1f7fb36b1116919c7a85cafe439b8a2b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "contact_name": {
+                                        "description": "nombre del contacto",
+                                        "type": "string"
+                                    },
+                                    "number": {
+                                        "description": "número de teléfono de contacto",
+                                        "type": "integer"
+                                    },
+                                    "relationship": {
+                                        "description": "Parentesco",
+                                        "type": "string"
+                                    },
+                                    "user_id": {
+                                        "description": "Identificación del usuario",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizar un contacto"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Contacto"
+                ],
+                "description": "Delete a single contact on the ID supplied",
+                "operationId": "11eeaeecc55ec252ab03687209b6e145",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of contact to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminar un contacto"
+                    }
+                }
+            }
+        },
+        "/api/contacto/usuario/{id}": {
+            "get": {
+                "tags": [
+                    "Contacto"
+                ],
+                "description": "Get contact by ID",
+                "operationId": "1dd3230990fb9ea7a2dd6c50bdd07a38",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "user_id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener la información de un contacto por su id"
+                    }
+                }
+            }
+        },
         "/api/accounts": {
             "get": {
                 "tags": [
@@ -634,6 +800,28 @@
                 "responses": {
                     "204": {
                         "description": "Eliminar un telefono"
+                    }
+                }
+            }
+        },
+        "/api/telefono/usuario/{id}": {
+            "get": {
+                "tags": [
+                    "Teléfonos"
+                ],
+                "description": "Get telefono information by ID",
+                "operationId": "8335f4a7f216409d5015af5e51f43951",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener la información de los teléfonos por su id"
                     }
                 }
             }
