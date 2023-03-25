@@ -22,5 +22,14 @@ class PermissionRoleTableSeeder extends Seeder
         $role->permissions()->sync(
             $permissions->pluck('id')->all()
         );
+
+
+        $role = Role::where('name', 'Administrator')->firstOrFail();
+
+        $permissions = Permission::all();
+
+        $role->permissions()->sync(
+            $permissions->pluck('id')->all()
+        );
     }
 }

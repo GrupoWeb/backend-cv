@@ -1,66 +1,58 @@
-FROM ubuntu:20.04
+FROM php:8.1-apache 
+EXPOSE 80
 
-LABEL maintainer="Taylor Otwell"
+COPY vhost.conf /etc/apache2/sites-available/000-default.conf 
 
-ARG WWWGROUP
-ARG NODE_VERSION=16
-ARG POSTGRES_VERSION=13
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        gcc make autoconf libc-dev pkg-config \
+        libmcrypt-dev \
+        libpng-dev \
+        git \
+        zip \ 
+        unzip \
+        libzip-dev \
+        nano \
+        python2  \
+        iputils-ping  \
+        libldap2-dev   \
+        libxml2-dev  \
+    && pecl install mcrypt-1.0.5  \
+    && docker-php-ext-install -j$(nproc) iconv   \
+    && docker-php-ext-install zip  \
+    && docker-php-ext-install pdo_mysql   \
+    && docker-php-ext-install bcmath \
+    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
+    && docker-php-ext-install ldap \
+    && docker-php-ext-enable mcrypt \
+    && docker-php-ext-install pcntl \
+    && docker-php-ext-install soap
+
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+RUN docker-php-ext-install gd
+
+
+RUN chown -R www-data:www-data /var/www/html 
 
 WORKDIR /var/www/html
 
-COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+RUN a2enmod headers \
+    && a2enmod rewrite \
+   && service apache2 restart 
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV TZ=UTC
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV NODE_VERSION=14.18.1
+RUN apt install -y curl
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+ENV NVM_DIR=/root/.nvm
+RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
-RUN apt-get update \
-    && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 \
-    && mkdir -p ~/.gnupg \
-    && chmod 600 ~/.gnupg \
-    && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
-    && echo "keyserver hkp://keyserver.ubuntu.com:80" >> ~/.gnupg/dirmngr.conf \
-    && gpg --recv-key 0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c \
-    && gpg --export 0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c > /usr/share/keyrings/ppa_ondrej_php.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu focal main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
-    && apt-get update \
-    && apt-get install -y php8.0-cli php8.0-dev \
-    php8.0-pgsql php8.0-sqlite3 php8.0-gd \
-    php8.0-curl php8.0-memcached \
-    php8.0-imap php8.0-mysql php8.0-mbstring \
-    php8.0-xml php8.0-zip php8.0-bcmath php8.0-soap \
-    php8.0-intl php8.0-readline php8.0-pcov \
-    php8.0-msgpack php8.0-igbinary php8.0-ldap \
-    php8.0-redis php8.0-swoole php8.0-xdebug \
-    && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
-    && curl -sLS https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm \
-    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null \
-    && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
-    && curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /usr/share/keyrings/pgdg.gpg >/dev/null \
-    && echo "deb [signed-by=/usr/share/keyrings/pgdg.gpg] http://apt.postgresql.org/pub/repos/apt focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
-    && apt-get update \
-    && apt-get install -y yarn \
-    && apt-get install -y mysql-client \
-    && apt-get install -y postgresql-client-$POSTGRES_VERSION \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN update-alternatives --set php /usr/bin/php8.0
-
-RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.0
-
-RUN groupadd --force -g 1000 sail
-RUN useradd -ms /bin/bash --no-user-group -g 1000 -u 1337 sail
-
-COPY start-container /usr/local/bin/start-container
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
-RUN chmod +x /usr/local/bin/start-container
-
-EXPOSE 80
-
-ENTRYPOINT ["start-container"]
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+RUN php composer-setup.php
+RUN php -r "unlink('composer-setup.php');"
+RUN mv composer.phar /usr/local/bin/composer

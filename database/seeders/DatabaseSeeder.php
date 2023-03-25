@@ -14,6 +14,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+//        $this->call([
+//            DataTypesTableSeeder::class,
+//            DataRowsTableSeeder::class,
+//            MenusTableSeeder::class,
+//            MenuItemsTableSeeder::class,
+//            RolesTableSeeder::class,
+//            PermissionsTableSeeder::class,
+//            PermissionRoleTableSeeder::class,
+//            SettingsTableSeeder::class,
+//        ]);
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -11,14 +11,25 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->id()->comment('ID');
+            $table->string('name')->comment('Nombre Completo');
+            $table->string('first_name')->nullable()->comment('Primer Nombre');
+            $table->string('second_name')->nullable()->comment('Segundo Nombre');
+            $table->string('surname')->nullable()->comment('Primer Apellido');
+            $table->string('second_surname')->nullable()->comment('Segundo Apellido');
+            $table->string('email')->unique()->comment('Correo Electrónico');
+            $table->timestamp('email_verified_at')->nullable()->comment('Verificación de correo');
+            $table->string('password')->comment('Contraseña');
+            $table->bigInteger('identification')->nullable()->comment('DPI');
+            $table->string('address')->nullable()->comment('Dirección');
+            $table->date('date_of_birth')->nullable()->comment('Fecha de Nacimiento');
+            $table->string('nit')->nullable()->comment('NIT');
+            $table->string('gender',2)->nullable()->comment('Género');
+            $table->string('marital_status')->nullable()->comment('Estado Civil');
+            $table->bigInteger('igss')->nullable()->comment('IGSS');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -29,7 +40,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('users');
     }

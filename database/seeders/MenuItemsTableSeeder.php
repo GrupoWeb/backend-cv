@@ -19,22 +19,6 @@ class MenuItemsTableSeeder extends Seeder
 
         $menuItem = MenuItem::firstOrNew([
             'menu_id' => $menu->id,
-            'title'   => __('voyager::seeders.menu_items.dashboard'),
-            'url'     => '',
-            'route'   => 'voyager.dashboard',
-        ]);
-        if (!$menuItem->exists) {
-            $menuItem->fill([
-                'target'     => '_self',
-                'icon_class' => 'voyager-boat',
-                'color'      => null,
-                'parent_id'  => null,
-                'order'      => 1,
-            ])->save();
-        }
-
-        $menuItem = MenuItem::firstOrNew([
-            'menu_id' => $menu->id,
             'title'   => __('voyager::seeders.menu_items.media'),
             'url'     => '',
             'route'   => 'voyager.media.index',
@@ -51,7 +35,7 @@ class MenuItemsTableSeeder extends Seeder
 
         $menuItem = MenuItem::firstOrNew([
             'menu_id' => $menu->id,
-            'title'   => __('voyager::seeders.menu_items.users'),
+            'title'   => 'Usuarios',
             'url'     => '',
             'route'   => 'voyager.users.index',
         ]);
@@ -83,7 +67,7 @@ class MenuItemsTableSeeder extends Seeder
 
         $toolsMenuItem = MenuItem::firstOrNew([
             'menu_id' => $menu->id,
-            'title'   => __('voyager::seeders.menu_items.tools'),
+            'title'   => 'Herramientas',
             'url'     => '',
         ]);
         if (!$toolsMenuItem->exists) {
@@ -98,7 +82,7 @@ class MenuItemsTableSeeder extends Seeder
 
         $menuItem = MenuItem::firstOrNew([
             'menu_id' => $menu->id,
-            'title'   => __('voyager::seeders.menu_items.menu_builder'),
+            'title'   => 'Constructor',
             'url'     => '',
             'route'   => 'voyager.menus.index',
         ]);
@@ -114,7 +98,7 @@ class MenuItemsTableSeeder extends Seeder
 
         $menuItem = MenuItem::firstOrNew([
             'menu_id' => $menu->id,
-            'title'   => __('voyager::seeders.menu_items.database'),
+            'title'   => 'Base de Datos',
             'url'     => '',
             'route'   => 'voyager.database.index',
         ]);
@@ -162,7 +146,7 @@ class MenuItemsTableSeeder extends Seeder
 
         $menuItem = MenuItem::firstOrNew([
             'menu_id' => $menu->id,
-            'title'   => __('voyager::seeders.menu_items.settings'),
+            'title'   => 'Ajustes',
             'url'     => '',
             'route'   => 'voyager.settings.index',
         ]);
@@ -175,5 +159,104 @@ class MenuItemsTableSeeder extends Seeder
                 'order'      => 14,
             ])->save();
         }
+
+        $menuAdmin = Menu::where('name', 'cvisual')->firstOrFail();
+
+        $adminTool = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.menu.title.administrator',
+            'url'     => '',
+        ]);
+        if (!$adminTool->exists) {
+            $adminTool->fill([
+                'target'     => '_self',
+                'icon_class' => 'bx-terminal',
+                'color'      => null,
+                'parent_id'  => null,
+                'order'      => 1,
+            ])->save();
+        }
+//usuarios
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.children.user',
+            'url'     => '/administracion/usuarios',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => '',
+                'color'      => null,
+                'parent_id'  => $adminTool->id,
+                'order'      => 10,
+            ])->save();
+        }
+
+//cuentas
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.children.account',
+            'url'     => '/administracion/cuentas',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => '',
+                'color'      => null,
+                'parent_id'  => $adminTool->id,
+                'order'      => 11,
+            ])->save();
+        }
+
+//clientes
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.children.client',
+            'url'     => '/administracion/clientes',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => '',
+                'color'      => null,
+                'parent_id'  => $adminTool->id,
+                'order'      => 12,
+            ])->save();
+        }
+
+//proveedores
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.children.provider',
+            'url'     => '/administracion/proveedores',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => '',
+                'color'      => null,
+                'parent_id'  => $adminTool->id,
+                'order'      => 13,
+            ])->save();
+        }
+
+//productos
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menuAdmin->id,
+            'title'   => 'menucustom.children.product',
+            'url'     => '/administracion/productos',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => '',
+                'color'      => null,
+                'parent_id'  => $adminTool->id,
+                'order'      => 14,
+            ])->save();
+        }
+
+
+
     }
 }

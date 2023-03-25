@@ -13,7 +13,7 @@ return [
     'user' => [
         'add_default_role_on_register' => true,
         'default_role'                 => 'user',
-        'default_avatar'               => 'users/default.png',
+        'default_avatar'               => '/storage/users/logo_cvisual.jpg',
         'redirect'                     => '/admin',
     ],
 
@@ -189,7 +189,7 @@ return [
 
     // Here you can specify additional assets you would like to be included in the master.blade
     'additional_css' => [
-        //'css/custom.css',
+        'css/custom.css',
     ],
 
     'additional_js' => [
