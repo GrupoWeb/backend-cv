@@ -35,7 +35,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return response()->json(User::selectRaw("users.id,CONCAT(users.first_name, ' ', users.second_name, ' ', users.surname, ' ', users.second_surname) as name, users.email, roles.display_name as rol, date_format(users.created_at,'%d/%m/%Y %H:%i:%S') as fecha_creacion")->join('roles','roles.id','=','users.role_id')->get(),Response::HTTP_OK);
+        return response()->json(User::selectRaw("users.id,CONCAT(users.first_name, ' ', users.second_name, ' ', users.surname, ' ', users.second_surname) as name, users.email, users.corporate_mail, roles.display_name as rol, date_format(users.created_at,'%d/%m/%Y %H:%i:%S') as fecha_creacion")->join('roles','roles.id','=','users.role_id')->get(),Response::HTTP_OK);
     }
 
     public function profile(Request $request)

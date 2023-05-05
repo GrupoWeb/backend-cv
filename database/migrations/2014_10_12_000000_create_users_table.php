@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('surname')->nullable()->comment('Primer Apellido');
             $table->string('second_surname')->nullable()->comment('Segundo Apellido');
             $table->string('email')->unique()->comment('Correo Electrónico');
+            $table->string('corporate_mail')->unique()->comment('Correo Corporativo');
             $table->timestamp('email_verified_at')->nullable()->comment('Verificación de correo');
             $table->string('password')->comment('Contraseña');
             $table->bigInteger('identification')->nullable()->comment('DPI');
