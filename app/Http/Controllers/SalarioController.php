@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Salario;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use DB;
 
 /**
  * Class SalarioController
@@ -154,7 +155,7 @@ class SalarioController extends Controller
      * )
      */
     public function showByUserId(int $id){
-        $salario = Salario::select('id','salary','bonus','agreed_bonus','user_id')->where(['user_id' => $id])->get();
+        $salario = Salario::selectRaw('id,CONCAT("Q. ",salary) as salary,CONCAT("Q. ",bonus) as bonus,CONCAT("Q. ",agreed_bonus) as agreed_bonus,user_id, DATE_FORMAT(created_at, "%d/%m/%Y") as registration_date,CONCAT("Q. ",(salary+bonus+agreed_bonus)) as total')->where(['user_id' => $id])->get();
 
         return response()->json($salario, Response::HTTP_OK);
     }

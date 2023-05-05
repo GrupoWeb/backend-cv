@@ -43,6 +43,11 @@ class Salario extends Model
      */
     protected $fillable = ['salary','bonus','agreed_bonus','user_id'];
 
+    protected $casts = [
+        'created_at' => 'date',
+    ];
+
+
 
     /**
      * @return HasOne

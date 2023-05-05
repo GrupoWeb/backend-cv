@@ -147,7 +147,7 @@ class FamiliumController extends Controller
      * )
      */
     public function showByUserId(int $id){
-        $familium = Familium::selectRaw('id,full_name, CASE WHEN gender = "M" THEN "MASCULINO" WHEN gender = "F" THEN "FEMENINO" ELSE "OTROS" END as gender, date_of_birth')->where(['user_id' => $id])->get();
+        $familium = Familium::selectRaw('id,full_name, CASE WHEN gender = "M" THEN "Masculino" WHEN gender = "F" THEN "Femenino" ELSE "OTROS" END as gender, date_of_birth, CASE WHEN (TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE())) = 0 THEN CONCAT(TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()), " años de edad") WHEN (TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE())) = 1 THEN CONCAT(TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()), " año de edad") WHEN (TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE())) > 1 THEN CONCAT(TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()), " años de edad") END AS age')->where(['user_id' => $id])->get();
 
         return response()->json($familium, Response::HTTP_OK);
     }
