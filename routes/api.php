@@ -33,5 +33,8 @@ Route::get('familia/childrens/{id}',[App\Http\Controllers\FamiliumController::cl
 Route::resource('familia','App\Http\Controllers\FamiliumController',['except' => ['create','edit']])->parameters(['familia' => 'id']);
 Route::resource('salario','App\Http\Controllers\SalarioController',['except' => ['create','edit']])->parameters(['salario' => 'id']);
 Route::get('salario/usuario/{id}',[App\Http\Controllers\SalarioController::class, 'showByUserId']);
+Route::get('telefono/usuario/{id}',[App\Http\Controllers\TelefonoController::class, 'showByUserId']);
 Route::resource('telefono','App\Http\Controllers\TelefonoController',['except' => ['create','edit']])->parameters(['telefono' => 'id']);
 Route::resource('tipo-telefono','App\Http\Controllers\TipoTelefonoController',['except' => ['create','edit']])->parameters(['tipo-telefono' => 'tipo']);
+Route::resource('contacto','App\Http\Controllers\ContactController',['except' => ['create','edit']])->parameters(['contacto' => 'id']);
+Route::get('contacto/usuario/{id}',[App\Http\Controllers\ContactController::class, 'showByUserId']);
