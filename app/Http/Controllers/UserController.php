@@ -123,7 +123,10 @@ class UserController extends Controller
 
             return response()->json(User::select('avatar')->where([ 'id'    =>  $request->id])->get(), Response::HTTP_ACCEPTED);
         }else{
-            return response()->json('not file contend',Response::HTTP_OK);
+            $fileName = time() . '_'.'fotografia_user_';
+            $file = $request->file('file');
+            $this->storeAvatarUser($file , $fileName, $file->getClientOriginalExtension(), $request->id);
+            return response()->json(User::select('avatar')->where([ 'id'    =>  $request->id])->get(), Response::HTTP_ACCEPTED);
         }
     }
 
@@ -132,5 +135,20 @@ class UserController extends Controller
         $user = User::where([ 'id'    =>  $request->id])->update($request->all());
         return response()->json($user, Response::HTTP_ACCEPTED);
     }
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+
+    public function destroy(int $id){
+
+        if(User::where(['id' => $id, 'role_id' => 2])->delete() === 1){
+            return response()->json(true,Response::HTTP_OK);
+        }else{
+            return response()->json(false,Response::HTTP_NOT_MODIFIED);
+        }
+    }
+
 
 }

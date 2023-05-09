@@ -6,10 +6,12 @@ use App\Casts\UserPasswordCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class User extends \TCG\Voyager\Models\User
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     static array $rules = [
         'email' =>  'required|unique:users,email',
@@ -68,5 +70,7 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->hasMany('App\Models\OauthAccessToken');
     }
+
+
 
 }
