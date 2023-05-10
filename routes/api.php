@@ -24,6 +24,7 @@ Route::post('users/profile',[App\Http\Controllers\UserController::class, 'profil
 Route::post('users/store',[App\Http\Controllers\UserController::class, 'storeUser']);
 Route::post('users/updateAvatar',[App\Http\Controllers\UserController::class, 'updateAvatarById']);
 Route::post('users/update',[App\Http\Controllers\UserController::class, 'updateUserById']);
+Route::post('users/labor',[App\Http\Controllers\UserController::class, 'setLabor']);
 Route::resource('users', 'App\Http\Controllers\UserController', ['except' => ['create','edit']]);
 Route::get('accounts/parent',[App\Http\Controllers\CuentasCorrienteController::class, 'CuentasPadres']);
 Route::get('accounts/export',[App\Http\Controllers\CuentasCorrienteController::class, 'exportExcel']);
@@ -38,3 +39,9 @@ Route::resource('telefono','App\Http\Controllers\TelefonoController',['except' =
 Route::resource('tipo-telefono','App\Http\Controllers\TipoTelefonoController',['except' => ['create','edit']])->parameters(['tipo-telefono' => 'tipo']);
 Route::resource('contacto','App\Http\Controllers\ContactController',['except' => ['create','edit']])->parameters(['contacto' => 'id']);
 Route::get('contacto/usuario/{id}',[App\Http\Controllers\ContactController::class, 'showByUserId']);
+
+Route::resource('area','App\Http\Controllers\AreaController',['except' => ['create','edit']])->parameters(['area' => 'id']);
+Route::resource('puesto','App\Http\Controllers\PositionController',['except' => ['create','edit']])->parameters(['puesto' => 'id']);
+Route::resource('prestamo','App\Http\Controllers\MoneyLoanController',['except' => ['create','edit']])->parameters(['prestamo' => 'id']);
+Route::resource('falta','App\Http\Controllers\WorkAbsenceController',['except' => ['create','edit']])->parameters(['falta' => 'id']);
+Route::get('prestamo/usuario/{id}',[App\Http\Controllers\MoneyLoanController::class, 'showByUserId']);

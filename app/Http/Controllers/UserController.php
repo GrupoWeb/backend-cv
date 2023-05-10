@@ -35,7 +35,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return response()->json(User::selectRaw("users.id,CONCAT(users.first_name, ' ', users.second_name, ' ', users.surname, ' ', users.second_surname) as name, users.email, users.corporate_mail, roles.display_name as rol, date_format(users.created_at,'%d/%m/%Y %H:%i:%S') as fecha_creacion")->join('roles','roles.id','=','users.role_id')->get(),Response::HTTP_OK);
+        return response()->json(User::selectRaw("users.id,CONCAT(users.first_name, ' ', users.second_name, ' ', users.surname, ' ', users.second_surname) as name, users.email, users.corporate_mail, roles.display_name as rol, date_format(users.created_at,'%d/%m/%Y %H:%i:%S') as fecha_creacion,area_id, position_id, date_of_admission, bank_account, account_name, licence_number, scholarship")->join('roles','roles.id','=','users.role_id')->get(),Response::HTTP_OK);
     }
 
     public function profile(Request $request)
@@ -113,7 +113,7 @@ class UserController extends Controller
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
     public function updateAvatarById(Request $request){
         if($this->existAndDeleteFile($this->splitAvatarPath($request->id))){
@@ -148,6 +148,16 @@ class UserController extends Controller
         }else{
             return response()->json(false,Response::HTTP_NOT_MODIFIED);
         }
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+
+    public function setLabor(Request $request){
+        $user = User::where([ 'id'    =>  $request->id])->update($request->all());
+        return response()->json($user, Response::HTTP_ACCEPTED);
     }
 
 

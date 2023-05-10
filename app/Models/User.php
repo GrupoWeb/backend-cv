@@ -41,7 +41,12 @@ class User extends \TCG\Voyager\Models\User
         'gender',
         'marital_status',
         'igss',
-        "role_id"
+        "role_id",
+        "date_of_admission",
+        "bank_account",
+        "account_name",
+        "license_number",
+        "scholarship"
     ];
 
     /**

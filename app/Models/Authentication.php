@@ -19,6 +19,7 @@ class Authentication extends Model
     protected $fillable = [
         'username',
         'email',
+        'corporate_mail',
         'password',
     ];
 

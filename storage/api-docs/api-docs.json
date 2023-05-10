@@ -5,6 +5,126 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/area": {
+            "get": {
+                "tags": [
+                    "Areas Laborales"
+                ],
+                "description": "Obtener todas las areas",
+                "operationId": "27d59b5c035db1d62717ad06c1fdefc1",
+                "responses": {
+                    "200": {
+                        "description": "Listado de Areas"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Areas Laborales"
+                ],
+                "description": "Guarda la información de las áreas laborales",
+                "operationId": "e0f26c363ff9ac10e23b932711798e65",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "description": "Descripción",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Crear una área"
+                    }
+                }
+            }
+        },
+        "/api/area/{id}": {
+            "get": {
+                "tags": [
+                    "Areas Laborales"
+                ],
+                "description": "Obtener una area por ID",
+                "operationId": "cbf3e9187032439d3e6c110d1061a3ae",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "descripción"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Areas Laborales"
+                ],
+                "description": "Actualizar una área",
+                "operationId": "56bfb71778faaf297d418afd709cc9bb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "description": "description",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Actualizar un registro"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Areas Laborales"
+                ],
+                "description": "Elimina un registro",
+                "operationId": "2e2ec2b139a849792cc2fb51cf460d0a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of type to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminar un registro"
+                    }
+                }
+            }
+        },
         "/api/contacto": {
             "get": {
                 "tags": [
@@ -492,6 +612,126 @@
                 "responses": {
                     "200": {
                         "description": "Obtener la información familiar por su id"
+                    }
+                }
+            }
+        },
+        "/api/puesto": {
+            "get": {
+                "tags": [
+                    "Puestos Laborales"
+                ],
+                "description": "Obtener todas los registros",
+                "operationId": "9cebec4eec6fb9f182912e5b80058320",
+                "responses": {
+                    "200": {
+                        "description": "descripción"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Puestos Laborales"
+                ],
+                "description": "Guarda la información de los puestos laborales",
+                "operationId": "eccfe100e81bcc1a3bc96c6ebd4e5496",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "description": "Descripción",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Crear una área"
+                    }
+                }
+            }
+        },
+        "/api/puesto/{id}": {
+            "get": {
+                "tags": [
+                    "Puestos Laborales"
+                ],
+                "description": "Obtener un puesto por ID",
+                "operationId": "e62d735ec72aca9283cdc2a4ad2c07d3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "descripción"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Puestos Laborales"
+                ],
+                "description": "Actualizar un puesto",
+                "operationId": "7a4e4d7c522273dbfcc35341cd042bd7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "description": "description",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Actualizar un registro"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Puestos Laborales"
+                ],
+                "description": "Elimina un registro",
+                "operationId": "f64213cc8744134cad31d65e56ed0995",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of type to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminar un registro"
                     }
                 }
             }
