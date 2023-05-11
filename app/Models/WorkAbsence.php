@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class WorkAbsence
  *
  * @property $id
- * @property $lack
- * @property $sanction
+ * @property $faltas_id
+ * @property $sanciones_id
  * @property $description
  * @property $due_date
  * @property $user_id
@@ -27,8 +27,8 @@ class WorkAbsence extends Model
     use SoftDeletes;
 
     static $rules = [
-		'lack' => 'required',
-		'sanction' => 'required',
+		'faltas_id' => 'required',
+		'sanciones_id' => 'required',
 		'description' => 'required',
 		'user_id' => 'required',
     ];
@@ -40,16 +40,32 @@ class WorkAbsence extends Model
      *
      * @var array
      */
-    protected $fillable = ['lack','sanction','description','due_date','user_id'];
+    protected $fillable = ['faltas_id','sanciones_id','description','due_date','user_id'];
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
-    public function user()
+    public function user(): HasOne
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
-    
+
+    /**
+     * @return HasOne
+     */
+    public function lack(): HasOne
+    {
+        return $this->hasOne('App\Models\Faltas', 'id', 'user_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function sanction(): HasOne
+    {
+        return $this->hasOne('App\Models\Sanciones', 'id', 'user_id');
+    }
+
 
 }

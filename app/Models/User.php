@@ -71,7 +71,7 @@ class User extends \TCG\Voyager\Models\User
 
 
 
-    public function AauthAcessToken()
+    public function AauthAcessToken(): HasMany
     {
         return $this->hasMany('App\Models\OauthAccessToken');
     }

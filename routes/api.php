@@ -41,7 +41,10 @@ Route::resource('contacto','App\Http\Controllers\ContactController',['except' =>
 Route::get('contacto/usuario/{id}',[App\Http\Controllers\ContactController::class, 'showByUserId']);
 
 Route::resource('area','App\Http\Controllers\AreaController',['except' => ['create','edit']])->parameters(['area' => 'id']);
+Route::resource('falta-laboral','App\Http\Controllers\FaltaController',['except' => ['create','edit']])->parameters(['falta-laboral' => 'id']);
+Route::resource('sancion','App\Http\Controllers\SancioneController',['except' => ['create','edit']])->parameters(['sancion' => 'id']);
 Route::resource('puesto','App\Http\Controllers\PositionController',['except' => ['create','edit']])->parameters(['puesto' => 'id']);
 Route::resource('prestamo','App\Http\Controllers\MoneyLoanController',['except' => ['create','edit']])->parameters(['prestamo' => 'id']);
 Route::resource('falta','App\Http\Controllers\WorkAbsenceController',['except' => ['create','edit']])->parameters(['falta' => 'id']);
 Route::get('prestamo/usuario/{id}',[App\Http\Controllers\MoneyLoanController::class, 'showByUserId']);
+Route::get('falta/usuario/{id}',[App\Http\Controllers\WorkAbsenceController::class, 'showByUserId']);

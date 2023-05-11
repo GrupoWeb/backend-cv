@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\WorkAbsence;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class WorkAbsenceController
@@ -14,96 +15,79 @@ class WorkAbsenceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        $workAbsences = WorkAbsence::paginate();
+        $workAbsences = WorkAbsence::selectRaw('id, faltas_id, sanciones_id, description, date_format(due_date,"%d/%m/%Y ") as due_date, date_format(created_at,"%d/%m/%Y ")  as fecha_creada')->get();
 
-        return view('work-absence.index', compact('workAbsences'))
-            ->with('i', (request()->input('page', 1) - 1) * $workAbsences->perPage());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $workAbsence = new WorkAbsence();
-        return view('work-absence.create', compact('workAbsence'));
+        return response()->json($workAbsences, Response::HTTP_OK);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
         request()->validate(WorkAbsence::$rules);
 
-        $workAbsence = WorkAbsence::create($request->all());
-
-        return redirect()->route('work-absences.index')
-            ->with('success', 'WorkAbsence created successfully.');
+        return response()->json(WorkAbsence::create($request->all()), Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $workAbsence = WorkAbsence::find($id);
 
-        return view('work-absence.show', compact('workAbsence'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $workAbsence = WorkAbsence::find($id);
-
-        return view('work-absence.edit', compact('workAbsence'));
+        return response()->json($workAbsence,Response::HTTP_OK);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  Request $request
      * @param  WorkAbsence $workAbsence
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
-    public function update(Request $request, WorkAbsence $workAbsence)
+    public function update(Request $request, WorkAbsence $workAbsence, int $id)
     {
         request()->validate(WorkAbsence::$rules);
 
-        $workAbsence->update($request->all());
+        $workAbsence->find($id)>update($request->all());
 
-        return redirect()->route('work-absences.index')
-            ->with('success', 'WorkAbsence updated successfully');
+        return response()->json('Actualizado correctamente',Response::HTTP_OK);
     }
 
     /**
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $workAbsence = WorkAbsence::find($id)->delete();
 
-        return redirect()->route('work-absences.index')
-            ->with('success', 'WorkAbsence deleted successfully');
+        return response()->json($workAbsence,Response::HTTP_OK);
+    }
+
+
+    public function showByUserId(int $id){
+        $moneyLoan = WorkAbsence::selectRaw('work_absences.id, faltas.description as falta, sanciones.description as sancion, work_absences.description, date_format(work_absences.due_date,"%d/%m/%Y ") as due_date, date_format(work_absences.created_at,"%d/%m/%Y") as fecha_creada,CASE WHEN GREATEST(TIMESTAMPDIFF(DAY, NOW(), work_absences.due_date),0) = 0 THEN CONCAT(GREATEST(TIMESTAMPDIFF(DAY, NOW(), work_absences.due_date),0), " días") WHEN GREATEST(TIMESTAMPDIFF(DAY, NOW(), work_absences.due_date),0) = 1 THEN CONCAT(GREATEST(TIMESTAMPDIFF(DAY, NOW(), work_absences.due_date),0), " día") ELSE CONCAT(GREATEST(TIMESTAMPDIFF(DAY, NOW(), work_absences.due_date),0), " días") END as dias, IF(NOW() <= work_absences.due_date, "Vigente", "No vigente") AS vigente')
+            ->join('faltas','faltas.id','=','work_absences.faltas_id')
+            ->join('sanciones','sanciones.id','=','work_absences.sanciones_id')
+            ->where(['work_absences.user_id' => $id])
+            ->withTrashed()
+            ->orderByDesc('id')
+            ->get();
+
+        return response()->json($moneyLoan, Response::HTTP_OK);
     }
 }
