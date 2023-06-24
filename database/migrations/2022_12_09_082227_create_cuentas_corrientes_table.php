@@ -9,9 +9,23 @@ return new class extends Migration {
     {
         Schema::create('cuentas_corrientes', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
+            $table->string('codigo')->nullable()->comment('Código');
             $table->text('title')->comment('Título');
+            $table->integer('nivel')->nullable();
+            $table->boolean('principal')->default(false);
+            $table->string('estilo')->nullable()->comment('Estilo');
             $table->unsignedBigInteger('parent_id')->nullable()->comment('Relación de cuenta Padre');
             $table->foreign('parent_id')->references('id')->on('cuentas_corrientes');
+
+
+            $table->unsignedBigInteger('grandparent_id')->nullable();
+            $table->unsignedBigInteger('great_grandparent_id')->nullable();
+            $table->unsignedBigInteger('great_great_grandparent_id')->nullable();
+
+            $table->foreign('grandparent_id')->references('id')->on('cuentas_corrientes');
+            $table->foreign('great_grandparent_id')->references('id')->on('cuentas_corrientes');
+            $table->foreign('great_great_grandparent_id')->references('id')->on('cuentas_corrientes');
+
             $table->timestamps();
             $table->softDeletes();
         });

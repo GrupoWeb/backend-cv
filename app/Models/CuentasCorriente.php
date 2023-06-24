@@ -11,8 +11,11 @@ use Illuminate\Support\Facades\DB;
  * Class CuentasCorriente
  *
  * @property $id
+ * @property $codigo
  * @property $title
- * @property $parent_id
+ * @property $nivel
+ * @property $principal
+ * @property $estilo
  * @property $created_at
  * @property $updated_at
  * @property $deleted_at
@@ -35,32 +38,31 @@ class CuentasCorriente extends Model
      *
      * @var array
      */
-    protected $fillable = ['title','parent_id','children_cuenta'];
+    protected $fillable = ['codigo', 'title', 'nivel', 'principal', 'estilo'];
 
-
-    public function cuentas(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function children()
     {
-        return $this->hasMany(CuentasCorriente::class,'parent_id');
+        return $this->hasMany(CuentasCorriente::class, 'parent_id');
     }
 
-    public function childrenCuenta(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function parent()
     {
-        return $this->hasMany(CuentasCorriente::class,'parent_id')->with('cuentas');
+        return $this->belongsTo(CuentasCorriente::class, 'parent_id');
     }
 
-    public function scopeIsNull($query)
+    public function grandparent()
     {
-        return $query->select('title as label','id as value')->whereNull('parent_id');
+        return $this->belongsTo(CuentasCorriente::class, 'grandparent_id');
     }
 
-    public function getAccountList()
+    public function greatGrandparent()
     {
-        return DB::table('cuentas_corrientes as t')
-            ->selectRaw('t.id, t.title, c.title as padre')
-            ->join('cuentas_corrientes as c','c.parent_id','=','t.id');
-
-
+        return $this->belongsTo(CuentasCorriente::class, 'great_grandparent_id');
     }
 
+    public function greatGreatGrandparent()
+    {
+        return $this->belongsTo(CuentasCorriente::class, 'great_great_grandparent_id');
+    }
 
 }

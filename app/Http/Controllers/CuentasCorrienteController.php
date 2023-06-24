@@ -25,51 +25,22 @@ class CuentasCorrienteController extends Controller
     /**
      * @OA\Get (
      *     path="/api/accounts",
-     *     description="Get all Accounts",
+     *     description="Obtener todas las cuentas corrientes",
      *     tags={"Cuentas"},
      *     @OA\Response(
      *     response=200,
-     *     description="Listado de cuentas contables"
+     *     description="Éxito"
      * ),
      * )
      */
     public function index()
     {
-        $cuentasCorrientes = CuentasCorriente::WhereNull('parent_id')
-            ->with('childrenCuenta')->get();
 
-        $cuentasCorrientes = json_decode($cuentasCorrientes);
-        foreach ($cuentasCorrientes as $row)
-        {
-            if(sizeof($row->children_cuenta) > 0)
-            {
-                $arrayD[] = [
-                    "id"    => $row->id,
-                    "Cuenta"    => $row->title,
-                    "Padre"     => ""
-                ];
-                foreach ($row->children_cuenta as $children)
-                {
-                    $arrayD[] = [
-                        "id"    => $children->id,
-                        "Cuenta"    => $children->title,
-                        "Padre"     => $row->title
-                    ];
-                }
-            }
-            else
-            {
-                $arrayD[] = [
-                    "id"    => $row->id,
-                    "Cuenta"    => $row->title,
-                    "Padre"    => ""
-                ];
+        $cuentasContables = CuentasCorriente::whereNull('parent_id')
+            ->with('children', 'children.children', 'children.children.children')
+            ->get();
 
-            }
-
-        }
-
-        return response()->json($arrayD, Response::HTTP_OK);
+        return response()->json($cuentasContables, Response::HTTP_OK);
 
     }
 
@@ -89,7 +60,7 @@ class CuentasCorrienteController extends Controller
      * )
      */
     public function CuentasPadres(){
-        $cuentasCorrientes = CuentasCorriente::IsNull()->get();
+        $cuentasCorrientes = CuentasCorriente::select('id as value','title as label')->get();
         return response()->json($cuentasCorrientes, Response::HTTP_OK);
     }
 
@@ -111,14 +82,29 @@ class CuentasCorrienteController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema (
      *                  @OA\Property(
-     *                      property = "title",
-     *                      description = "Nombre de la cuenta",
-     *                      type = "string"
+     *                      property = "codigo",
+     *                      description = "codigo de la cuenta",
+     *                      type = "integer"
      *                  ),
      *                  @OA\Property(
-     *                      property = "parent_id",
-     *                      description = "Id del Padre",
+     *                      property = "title",
+     *                      description = "Nombre de la cuenta",
+     *                      type = "string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property = "nivel",
+     *                      description = "nivel de la cuenta",
      *                      type = "integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property = "principal",
+     *                      description = "Si es principal o no",
+     *                      type = "boolean",
+     *                  ),
+     *                  @OA\Property(
+     *                      property = "estilo",
+     *                      description = "Negrita o simple",
+     *                      type = "string",
      *                  ),
      *              ),
      *          ),
@@ -133,9 +119,9 @@ class CuentasCorrienteController extends Controller
     {
         request()->validate(CuentasCorriente::$rules);
 
-        $cuentasCorriente = CuentasCorriente::create($request->all());
+        $cuentas = CuentasCorriente::create($request->all());
 
-        return response()->json($cuentasCorriente, Response::HTTP_CREATED);
+        return response()->json($cuentas, Response::HTTP_CREATED);
     }
 
     /**
