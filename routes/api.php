@@ -28,6 +28,8 @@ Route::post('users/labor',[App\Http\Controllers\UserController::class, 'setLabor
 Route::resource('users', 'App\Http\Controllers\UserController', ['except' => ['create','edit']]);
 Route::get('accounts/parent',[App\Http\Controllers\CuentasCorrienteController::class, 'CuentasPadres']);
 Route::get('accounts/export',[App\Http\Controllers\CuentasCorrienteController::class, 'exportExcel']);
+Route::post('accounts/level',[App\Http\Controllers\CuentasCorrienteController::class, 'cuentaByNivel']);
+Route::post('accounts/level/parent',[App\Http\Controllers\CuentasCorrienteController::class, 'cuentaByParentId']);
 Route::resource('accounts','App\Http\Controllers\CuentasCorrienteController',['except' => ['create','edit']]);
 
 Route::get('familia/childrens/{id}',[App\Http\Controllers\FamiliumController::class, 'showByUserId']);

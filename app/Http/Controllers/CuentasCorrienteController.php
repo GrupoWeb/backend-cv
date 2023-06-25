@@ -37,7 +37,7 @@ class CuentasCorrienteController extends Controller
     {
 
         $cuentasContables = CuentasCorriente::whereNull('parent_id')
-            ->with('children', 'children.children', 'children.children.children')
+            ->with('children', 'children.children', 'children.children.children','children.children.children.children')
             ->get();
 
         return response()->json($cuentasContables, Response::HTTP_OK);
@@ -62,6 +62,15 @@ class CuentasCorrienteController extends Controller
     public function CuentasPadres(){
         $cuentasCorrientes = CuentasCorriente::select('id as value','title as label')->get();
         return response()->json($cuentasCorrientes, Response::HTTP_OK);
+    }
+
+
+    public function cuentaByNivel(Request $request){
+        return response()->json(CuentasCorriente::select('id as value', 'title as text')->where(['nivel' =>  $request->level])->get(),Response::HTTP_OK);
+    }
+
+    public function cuentaByParentId(Request $request){
+        return response()->json(CuentasCorriente::select('id as value', 'title as text')->where(['parent_id' => $request->parent_id])->get(), Response::HTTP_OK);
     }
 
     /**

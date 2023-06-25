@@ -50,5 +50,18 @@ class CuentasContablesSeeder extends Seeder
             'grandparent_id' => $cuenta2->id,
             'great_grandparent_id' => $cuenta1->id
         ]);
+
+        // nivel 5
+        $cuenta5 = CuentasCorriente::create([
+            'codigo' => '001-001-001-001-001',
+            'title' => 'Cuenta Nivel 5',
+            'nivel' => 5,
+            'principal' => false,
+            'estilo' => 'estilo5',
+            'parent_id' => $cuenta4->id,
+            'grandparent_id' => $cuenta3->id,
+            'great_grandparent_id' => $cuenta2->id,
+            'great_great_grandparent_id' => $cuenta1->id
+        ]);
     }
 }

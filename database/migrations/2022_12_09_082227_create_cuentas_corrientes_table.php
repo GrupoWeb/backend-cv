@@ -14,17 +14,19 @@ return new class extends Migration {
             $table->integer('nivel')->nullable();
             $table->boolean('principal')->default(false);
             $table->string('estilo')->nullable()->comment('Estilo');
+
+
             $table->unsignedBigInteger('parent_id')->nullable()->comment('Relación de cuenta Padre');
+            $table->unsignedBigInteger('grandparent_id')->nullable()->comment('Relación de cuenta Abuelo');
+            $table->unsignedBigInteger('great_grandparent_id')->nullable()->comment('Relación de cuenta Bisabuelo');
+            $table->unsignedBigInteger('great_great_grandparent_id')->nullable()->comment('Relación de cuenta Tatarabuelo');
+            $table->unsignedBigInteger('great_great_great_grandparent_id')->nullable()->comment('Relación de cuenta Tatarabuelo');
+
             $table->foreign('parent_id')->references('id')->on('cuentas_corrientes');
-
-
-            $table->unsignedBigInteger('grandparent_id')->nullable();
-            $table->unsignedBigInteger('great_grandparent_id')->nullable();
-            $table->unsignedBigInteger('great_great_grandparent_id')->nullable();
-
             $table->foreign('grandparent_id')->references('id')->on('cuentas_corrientes');
             $table->foreign('great_grandparent_id')->references('id')->on('cuentas_corrientes');
             $table->foreign('great_great_grandparent_id')->references('id')->on('cuentas_corrientes');
+            $table->foreign('great_great_great_grandparent_id')->references('id')->on('cuentas_corrientes');
 
             $table->timestamps();
             $table->softDeletes();

@@ -40,29 +40,34 @@ class CuentasCorriente extends Model
      */
     protected $fillable = ['codigo', 'title', 'nivel', 'principal', 'estilo'];
 
-    public function children()
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CuentasCorriente::class, 'parent_id');
     }
 
-    public function parent()
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(CuentasCorriente::class, 'parent_id');
     }
 
-    public function grandparent()
+    public function grandparent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(CuentasCorriente::class, 'grandparent_id');
     }
 
-    public function greatGrandparent()
+    public function greatGrandparent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(CuentasCorriente::class, 'great_grandparent_id');
     }
 
-    public function greatGreatGrandparent()
+    public function greatGreatGrandparent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(CuentasCorriente::class, 'great_great_grandparent_id');
+    }
+
+    public function greatGreatGreatGrandparent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CuentasCorriente::class, 'great_great_great_grandparent_id');
     }
 
 }
