@@ -9,7 +9,12 @@ return new class extends Migration {
     {
         Schema::create('faltas', function (Blueprint $table) {
             $table->id()->comment('ID');
-            $table->string('description')->comment('Desctipción');
+            $table->integer('articulo_interno')->comment('Artículo Interno');
+            $table->longText('description')->comment('Descripción');
+            $table->string('area')->comment('Área');
+            $table->string('fundamento_legal')->comment('Fundamento Legal');
+            $table->string('frecuencia')->comment('Frecuencia');
+            $table->string('limpia_record')->comment('Limpiar Record');
             $table->timestamps();
             $table->softDeletes();
         });

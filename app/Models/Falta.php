@@ -32,7 +32,7 @@ class Falta extends Model
      *
      * @var array
      */
-    protected $fillable = ['description'];
+    protected $fillable = ['articulo_interno','description','area','fundamento_legal','frecuencia','limpia_record'];
 
 
 

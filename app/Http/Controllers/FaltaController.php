@@ -31,7 +31,7 @@ class FaltaController extends Controller
      */
     public function index()
     {
-        $faltas = Falta::selectRaw('id as value, description as label')->get();
+        $faltas = Falta::selectRaw('id, articulo_interno, description, area, fundamento_legal, frecuencia, limpia_record')->get();
 
         return response()->json($faltas, Response::HTTP_OK);
     }
