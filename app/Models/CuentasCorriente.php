@@ -38,7 +38,7 @@ class CuentasCorriente extends Model
      *
      * @var array
      */
-    protected $fillable = ['codigo', 'title', 'nivel', 'principal', 'estilo'];
+    protected $fillable = ['codigo', 'title', 'nivel', 'principal', 'estilo', 'parent_id', 'grandparent_id' , 'great_grandparent_id', 'great_great_grandparent_id' , 'great_great_great_grandparent_id'];
 
     public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
